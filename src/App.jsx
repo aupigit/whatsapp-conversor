@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Card from "./components/Card/Card";
 import "./Form.scss";
-import { LinkSimple, WhatsappLogo } from "phosphor-react";
+import { WhatsappLogo } from "phosphor-react";
 
 const Form = () => {
   const [phoneState, setPhoneState] = useState("");
@@ -10,6 +10,25 @@ const Form = () => {
   const [copyState, setCopyState] = useState(
     "Copiar para área de transferência"
   );
+  const [card, setCard] = useState();
+  const inputCard = useRef();
+
+  const handleChange = () => {
+    const cardValue = inputCard.current.value
+      .replace(/\D/g, "")
+      .match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/);
+    inputCard.current.value = !cardValue[2]
+      ? cardValue[1]
+      : `${cardValue[1]}-${cardValue[2]}${`${
+          cardValue[3] ? `-${cardValue[3]}` : ""
+        }`}${`${cardValue[4] ? `-${cardValue[4]}` : ""}`}`;
+    const numbers = inputCard.current.value.replace(/(\D)/g, "");
+    setCard(numbers);
+  };
+
+  useEffect(() => {
+    handleChange();
+  }, [card]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,16 +119,19 @@ const Form = () => {
             </div>
           </div>
           <div className="row">
+            {/* <input type="text" ref={inputCard} onChange={handleChange} /> */}
             <div className="input-field col s12">
               <input
                 id="phone"
                 name="phone"
                 type="number"
+                ref={inputCard}
                 className="validate"
                 value={phoneState}
                 onChange={(e) => setPhoneState(e.target.value)}
                 required
               />
+
               <label htmlFor="phone">
                 Escreva seu número de telefone aqui 📱
               </label>
