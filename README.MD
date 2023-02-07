@@ -4,8 +4,15 @@ Gera links para conversas com determinados numeros e mensagens
 ## Para Executar
 Para executar o aplicativo, você pode usar os seguintes comandos.
 
-- `npm install`
--`npm run dev`
+- Para instalar as dependencias
+
+  ```sh
+  yarn install ou yarn
+  ```
+- Para rodar o projeto
+  ```sh
+  yarn dev
+  ```
 
 ## Como contribuir
 
