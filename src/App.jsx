@@ -14,7 +14,7 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setUrlState(
-      `https://api.whatsapp.com/send?phone=${phoneState}&text=${encodeURIComponent(
+      `https://wa.me/?phone=${phoneState}&text=${encodeURIComponent(
         messageState
       )}`
     );
@@ -114,7 +114,6 @@ const Form = () => {
                 Escreva seu número de telefone aqui 📱
               </label>
               <span className="helper-text">
-                E.x + 5547988369635
                 <span className="teal-text">Não se esqueça do prefixo.</span>
               </span>
             </div>
