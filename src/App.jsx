@@ -1,41 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Card from "./components/Card/Card";
 import "./Form.scss";
-import { WhatsappLogo } from "phosphor-react";
+import { Swap, WhatsappLogo } from "phosphor-react";
+import MaskedInput from "./components/MaskedInput/MaskedInput";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Grid,
+  LinearProgress,
+  TextField,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import Confetti from "./components/Animation/Confetti";
 
 const Form = () => {
   const [phoneState, setPhoneState] = useState("");
   const [messageState, setMessageState] = useState("");
   const [urlState, setUrlState] = useState("");
-  const [copyState, setCopyState] = useState(
-    "Copiar para área de transferência"
-  );
-  const [card, setCard] = useState();
-  const inputCard = useRef();
-
-  const handleChange = () => {
-    const cardValue = inputCard.current.value
-      .replace(/\D/g, "")
-      .match(/(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})/);
-    inputCard.current.value = !cardValue[2]
-      ? cardValue[1]
-      : `${cardValue[1]}-${cardValue[2]}${`${
-          cardValue[3] ? `-${cardValue[3]}` : ""
-        }`}${`${cardValue[4] ? `-${cardValue[4]}` : ""}`}`;
-    const numbers = inputCard.current.value.replace(/(\D)/g, "");
-    setCard(numbers);
-  };
-
-  useEffect(() => {
-    handleChange();
-  }, [card]);
+  const [copyState, setCopyState] = useState("Copiar Link");
+  // const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [returnData, setReturnData] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    let newPhone = phoneState.replace(/\D/g, "");
     setUrlState(
-      `https://wa.me/?phone=${phoneState}&text=${encodeURIComponent(
-        messageState
-      )}`
+      `https://wa.me/${newPhone}?text=${encodeURIComponent(messageState)}`
     );
   };
 
@@ -48,6 +41,7 @@ const Form = () => {
   };
 
   const clearAll = () => {
+    setIsSubmitting(false);
     setPhoneState("");
     setMessageState("");
     setUrlState("");
@@ -84,15 +78,15 @@ const Form = () => {
             </a>
           </div>
           <div className="col s12 m12">
-            <button
+            <Button
               className="btn waves-effect waves-light teal accent-1 teal-text button-handler"
               onClick={() => {
                 clearAll();
               }}
+              endIcon={<Swap />}
             >
-              Limpar tudo
-              <i className="material-icons right">clear_all</i>
-            </button>
+              Refazer
+            </Button>
           </div>
         </div>
       </div>
@@ -100,75 +94,134 @@ const Form = () => {
   }
 
   return (
-    <Card>
-      <div className="form-wrap">
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          <div className="row">
-            <div className="input-field col s12">
-              <h4>
-                <WhatsappLogo size={37} weight="duotone" /> Whatsapp Conversor
-              </h4>
-              <p className="teal-text margin-negative">
-                Crie mensagens personalizadas do WhatsApp e envie para quem você
-                quiser.{" "}
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            {/* <input type="text" ref={inputCard} onChange={handleChange} /> */}
-            <div className="input-field col s12">
-              <input
-                id="phone"
-                name="phone"
-                type="number"
-                ref={inputCard}
-                className="validate"
-                value={phoneState}
-                onChange={(e) => setPhoneState(e.target.value)}
-                required
-              />
+    <>
+      {/* {!isLoading && ( */}
+      <>
+        {isSubmitting && (
+          <>
+            {!returnData && (
+              <Card>
+                <Confetti />
 
-              <label htmlFor="phone">
-                Escreva seu número de telefone aqui 📱
-              </label>
-              <span className="helper-text">
-                <span className="teal-text">Não se esqueça do prefixo.</span>
-              </span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <textarea
-                id="message"
-                name="message"
-                type="text"
-                className="materialize-textarea validate"
-                value={messageState}
-                onChange={(e) => setMessageState(e.target.value)}
-                required
-              />
-              <label htmlFor="message">Escreva sua mensagem aqui ✍️</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col s12">
-              <button
-                className="btn waves-effect waves-light teal button-handler"
-                type="submit"
+                <div className="form-wrap">
+                  <form
+                    onSubmit={(e) => {
+                      handleSubmit(e);
+                    }}
+                  >
+                    <div className="row">
+                      <div className="input-field col s12">
+                        <h4> Parabéns 🎉🎉🎉</h4>
+                        <h5>
+                          Agora você pode enviar esse link pra quem você quiser
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="row">
+                      {urlState ? renderResult(urlState) : ""}
+                    </div>
+                  </form>
+                </div>
+              </Card>
+            )}
+          </>
+        )}
+
+        {!isSubmitting && (
+          <Card>
+            <div className="form-wrap">
+              <form
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                }}
               >
-                Gerar Link
-                <i className="material-icons right">link</i>
-              </button>
+                <div className="row">
+                  <div className="input-field col s12">
+                    <h4>
+                      <WhatsappLogo size={37} weight="duotone" /> Whatsapp
+                      Conversor
+                    </h4>
+                    <p className="teal-text margin-negative">
+                      Crie mensagens personalizadas do WhatsApp e envie para
+                      quem você quiser.
+                    </p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="input-field col s12">
+                    <MaskedInput
+                      id="phone"
+                      type="number"
+                      mask={"(99) 99999-9999"}
+                      name="phone"
+                      label="Escreva seu número de telefone aqui 📱"
+                      onChange={(e) => setPhoneState(e.target.value)}
+                      value={phoneState}
+                    />
+
+                    {/* <label htmlFor="phone">
+                Escreva seu número de telefone aqui 📱
+              </label> */}
+
+                    <span className="helper-text">
+                      Ex: 47988369635
+                      <br />
+                      <span className="teal-text">
+                        Não se esqueça do prefixo.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="input-field col s12">
+                    <TextField
+                      id="message"
+                      name="message"
+                      type="text"
+                      className="materialize-textarea validate"
+                      value={messageState}
+                      label="Escreva sua mensagem aqui ✍️"
+                      onChange={(e) => setMessageState(e.target.value)}
+                      required
+                      fullWidth
+                      variant="standard"
+                    />
+
+                    {/* <label htmlFor="message">Escreva sua mensagem aqui ✍️</label> */}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col s12">
+                    <button
+                      className="btn waves-effect waves-light teal button-handler"
+                      type="submit"
+                    >
+                      Gerar Link
+                      <i className="material-icons right">link</i>
+                    </button>
+                  </div>
+                  {urlState ? renderResult(urlState) : ""}
+                </div>
+              </form>
             </div>
-            {urlState ? renderResult(urlState) : ""}
-          </div>
-        </form>
-      </div>
-    </Card>
+          </Card>
+        )}
+      </>
+      {/* )} */}
+      {/* 
+      {isLoading && (
+        <Grid container>
+          <Grid item xs={12}>
+            <h1>Carregando</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
+          </Grid>
+        </Grid>
+      )} */}
+    </>
   );
 };
 
