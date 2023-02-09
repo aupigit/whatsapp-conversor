@@ -33,7 +33,9 @@ const Form = () => {
     setIsSubmitting(true);
     let newPhone = phoneState.replace(/\D/g, "");
     setUrlState(
-      `https://wa.me/${newPhone}?text=${encodeURIComponent(messageState)}`
+      `https://api.whatsapp.com/send?phone=55${newPhone}&text=${encodeURIComponent(
+        messageState
+      )}`
     );
   };
 
