@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Card from "./components/Card/Card";
 import "./Form.scss";
 import {
+  ArrowFatDown,
   Copy,
   LinkBreak,
   LinkSimpleHorizontal,
@@ -16,9 +17,11 @@ import {
   Grid,
   LinearProgress,
   TextField,
+  Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import Confetti from "./components/Animation/Confetti";
+import QRCode from "react-qr-code";
+import { QRCodeCanvas } from "qrcode.react";
 
 const Form = () => {
   const [phoneState, setPhoneState] = useState("");
@@ -76,6 +79,7 @@ const Form = () => {
               </i>
             </button>
           </div>
+
           <div className="col s12 m6">
             <a
               className="btn waves-effect waves-light teal button-handler"
@@ -99,6 +103,20 @@ const Form = () => {
             >
               Refazer
             </Button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s12">
+            <span className="black-text">
+              Ou se preferir use o QR CODE abaixo
+              <i>
+                {" "}
+                <ArrowFatDown size={16} weight="bold" />
+              </i>
+              <br />
+              <br />
+            </span>
+            <QRCodeCanvas id="qrCode" value={urlState} size={200} level={"H"} />
           </div>
         </div>
       </div>
