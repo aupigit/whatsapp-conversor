@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import Card from "./components/Card/Card";
 import "./Form.scss";
-import { Swap, WhatsappLogo } from "phosphor-react";
+import {
+  Copy,
+  LinkBreak,
+  LinkSimpleHorizontal,
+  Swap,
+  WhatsappLogo,
+} from "phosphor-react";
 import MaskedInput from "./components/MaskedInput/MaskedInput";
 import {
   Alert,
@@ -19,7 +25,6 @@ const Form = () => {
   const [messageState, setMessageState] = useState("");
   const [urlState, setUrlState] = useState("");
   const [copyState, setCopyState] = useState("Copiar Link");
-  // const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [returnData, setReturnData] = useState(false);
 
@@ -64,7 +69,9 @@ const Form = () => {
               }}
             >
               {copyState}
-              <i className="material-icons right">content_copy</i>
+              <i className="material-icons right">
+                <Copy />
+              </i>
             </button>
           </div>
           <div className="col s12 m6">
@@ -74,7 +81,10 @@ const Form = () => {
               target="a_blank"
             >
               Enviar no WhatsApp
-              <i className="material-icons right">open_in_new</i>
+              <i className="material-icons right">
+                {" "}
+                <LinkSimpleHorizontal />
+              </i>
             </a>
           </div>
           <div className="col s12 m12">
@@ -95,7 +105,6 @@ const Form = () => {
 
   return (
     <>
-      {/* {!isLoading && ( */}
       <>
         {isSubmitting && (
           <>
@@ -159,10 +168,6 @@ const Form = () => {
                       value={phoneState}
                     />
 
-                    {/* <label htmlFor="phone">
-                Escreva seu número de telefone aqui 📱
-              </label> */}
-
                     <span className="helper-text">
                       Ex: 47988369635
                       <br />
@@ -186,8 +191,6 @@ const Form = () => {
                       fullWidth
                       variant="standard"
                     />
-
-                    {/* <label htmlFor="message">Escreva sua mensagem aqui ✍️</label> */}
                   </div>
                 </div>
                 <div className="row">
@@ -197,7 +200,9 @@ const Form = () => {
                       type="submit"
                     >
                       Gerar Link
-                      <i className="material-icons right">link</i>
+                      <i className="material-icons right">
+                        <LinkSimpleHorizontal />
+                      </i>
                     </button>
                   </div>
                   {urlState ? renderResult(urlState) : ""}
@@ -207,20 +212,6 @@ const Form = () => {
           </Card>
         )}
       </>
-      {/* )} */}
-      {/* 
-      {isLoading && (
-        <Grid container>
-          <Grid item xs={12}>
-            <h1>Carregando</h1>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ width: "100%" }}>
-              <LinearProgress />
-            </Box>
-          </Grid>
-        </Grid>
-      )} */}
     </>
   );
 };

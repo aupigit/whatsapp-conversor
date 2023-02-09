@@ -11,20 +11,18 @@ const MaskedInput = ({
   label,
   touched,
   errors,
-  onInput
+  onInput,
 }) => {
   return (
-    <InputMask  onInput={onInput} mask={mask} value={value} onChange={onChange} onBlur={onBlur}>
+    <InputMask
+      onInput={onInput}
+      mask={mask}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+    >
       {() => (
-        <TextField
-          name={name}
-          label={label}
-          helperText={touched ? errors : ""}
-          error={touched && Boolean(errors)}
-          fullWidth
-          variant="standard"
-          onInput={onInput}
-        />
+        <TextField name={name} label={label} fullWidth variant="standard" />
       )}
     </InputMask>
   );
