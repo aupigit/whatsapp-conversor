@@ -20,7 +20,6 @@ import {
   Typography,
 } from "@mui/material";
 import Confetti from "./components/Animation/Confetti";
-import QRCode from "react-qr-code";
 import { QRCodeCanvas } from "qrcode.react";
 
 const Form = () => {
