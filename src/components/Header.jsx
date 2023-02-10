@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import logo from "../assets/logoAupi.png";
+import logo from "../assets/whataLogo.png";
 
 const theme = createTheme({
   status: {

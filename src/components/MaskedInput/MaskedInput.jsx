@@ -21,9 +21,7 @@ const MaskedInput = ({
       onChange={onChange}
       onBlur={onBlur}
     >
-      {() => (
-        <TextField name={name} label={label} fullWidth variant="standard" />
-      )}
+      {() => <input placeholder="Escreva seu número de telefone aqui 📱"/>}
     </InputMask>
   );
 };

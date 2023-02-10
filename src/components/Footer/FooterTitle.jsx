@@ -8,7 +8,6 @@ const FooterTitle = ({ text }) => {
     component='h6'
     sx={{
       fontWeight: '700',
-      textTransform: 'capitalize',
       color: 'white',
       pb: 1,
     }}
