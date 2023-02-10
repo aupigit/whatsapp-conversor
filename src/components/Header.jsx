@@ -31,7 +31,7 @@ const theme = createTheme({
   },
 });
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Produtos", "Planos e Preços", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Header() {
