@@ -1,9 +1,7 @@
 // Variables
 $card-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
 
-.header-accent {
-	height: 278px;
-}
+
 
 .card-wrap {
   margin: auto;
@@ -16,7 +14,7 @@ $card-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
   -webkit-box-shadow: $card-shadow;
   box-shadow: $card-shadow;
   word-wrap: break-word;
-  margin-top: -100px;
+  margin-top: 100px;
 }
 
 .card-detail {
